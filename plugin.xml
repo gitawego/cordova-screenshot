@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.apache.cordova.screenshot" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>Screenshot</name>
+    <description>screenshot PhoneGap Plugin for Android</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,screenshot</keywords>
+    <repo>https://github.com/gitawego/cordova-screenshot.git</repo>
+    <js-module src="www/Screenshot.js" name="screenshot">
+        <merges target="navigator.screenshot" />
+    </js-module>
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Screenshot">
+                <param name="android-package" value="org.apache.cordova.screenshot.Screenshot" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/Screenshot.java" target-dir="src/org/apache/cordova/screenshot" />
+    </platform>
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Screenshot">
+                <param name="ios-package" value="Screenshot"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/Screenshot.h" />
+        <source-file src="src/ios/Screenshot.m" />
+    </platform>
+</plugin>
