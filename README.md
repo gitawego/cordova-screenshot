@@ -6,18 +6,20 @@ The Screenshot plugin allows your application to take screenshots of the current
 ##how to install
 
 * install it via cordova cli
+
 ```
 cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 ```
 
 * add this line to `www/config.xml`
+
 ```xml
 <feature name="http://api.phonegap.com/1.0/file" />
 ```
 * then remove and add platform to upate the features, ex: android
+
 ```bash
 cordova platform remove android
-
 cordova platform add android
 ```
 
