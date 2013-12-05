@@ -11,12 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Cordova/CDVPlugin.h>
 
-#ifdef CORDOVA_FRAMEWORK
-    #import <Cordova/CDVPlugin.h>
-#else
-    #import "CDVPlugin.h"
-#endif
-
 @interface Screenshot : CDVPlugin {
 }
 
