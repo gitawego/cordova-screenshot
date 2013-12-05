@@ -17,6 +17,7 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 * then remove and add platform to upate the features, ex: android
 ```
 cordova platform remove android
+
 cordova platform add android
 ```
 
