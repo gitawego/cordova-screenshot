@@ -15,7 +15,7 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 <feature name="http://api.phonegap.com/1.0/file" />
 ```
 * then remove and add platform to upate the features, ex: android
-```
+```bash
 cordova platform remove android
 
 cordova platform add android
