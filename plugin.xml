@@ -15,6 +15,9 @@
                 <param name="android-package" value="org.apache.cordova.screenshot.Screenshot" />
             </feature>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
         <source-file src="src/android/Screenshot.java" target-dir="src/org/apache/cordova/screenshot" />
     </platform>
     <!-- ios -->
