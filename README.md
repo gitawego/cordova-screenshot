@@ -15,5 +15,9 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 ##usage
 
 ```js
-navigator.screenshot.save();
+navigator.screenshot.save(function(){
+  console.log('ok');
+},function(error){
+   console.error(error);
+});
 ```
