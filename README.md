@@ -21,3 +21,5 @@ navigator.screenshot.save(function(){
    console.error(error);
 });
 ```
+
+screenshot files are stored in /sdcard/Pictures for android.
