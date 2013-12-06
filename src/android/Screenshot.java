@@ -27,6 +27,7 @@ public class Screenshot extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 	 	// starting on ICS, some WebView methods
 		// can only be called on UI threads
+		final CallbackContext cb = callbackContext;
 		if (action.equals("saveScreenshot")) {
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
@@ -47,10 +48,10 @@ public class Screenshot extends CordovaPlugin {
 
 						FileOutputStream fos = new FileOutputStream(f);
 						bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-						callbackContext.success();
+						cb.success();
 
 					} catch (IOException e) {
-						callbackContext.error(e.getMessage());
+						cb.error(e.getMessage());
 					}
 				}
 			});
