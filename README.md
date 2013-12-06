@@ -15,11 +15,23 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 ##usage
 
 ```js
-navigator.screenshot.save(function(){
-  console.log('ok');
-},function(error){
-   console.error(error);
+navigator.screenshot.save(function(error){
+  if(error){
+    console.error(error);
+  }else{
+    console.log('ok');
+  }
 });
+```
+take screenshot with jpg and custom quality
+```js
+navigator.screenshot.save(function(error){
+  if(error){
+    console.error(error);
+  }else{
+    console.log('ok');
+  }
+},'jpg',50);
 ```
 
 screenshot files are stored in /sdcard/Pictures for android.
