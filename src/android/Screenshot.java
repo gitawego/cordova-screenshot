@@ -50,7 +50,7 @@ public class Screenshot extends CordovaPlugin {
 						callbackContext.success();
 
 					} catch (IOException e) {
-						callbackContext.error(e.getMessage()));
+						callbackContext.error(e.getMessage());
 					}
 				}
 			});
