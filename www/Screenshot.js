@@ -8,7 +8,7 @@
  */
 var exec = require('cordova/exec');
 module.exports = {
-	save:function(callback) {
-		exec(callback, callback, "Screenshot", "saveScreenshot", []);
+	save:function(callback,fallback) {
+		exec(callback, fallback, "Screenshot", "saveScreenshot", []);
 	}
 };
