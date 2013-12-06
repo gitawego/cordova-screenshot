@@ -56,7 +56,7 @@ public class Screenshot extends CordovaPlugin {
 			});
 			return true;
 		}
-		callbackContext.error('action not found');
+		callbackContext.error("action not found");
 		return false;
 		
 	}
