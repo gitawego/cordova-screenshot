@@ -11,7 +11,7 @@ module.exports = {
 	save:function(callback,format,quality) {
 		format = (format || 'png').toLowerCase();
 		if(formats.indexOf(format) === -1){
-			return callback('invalid format '+format);
+			return callback && callback('invalid format '+format);
 		}
 		quality = typeof(quality) !== 'number'?100:quality;
 		exec(function(){
