@@ -27,30 +27,43 @@ public class Screenshot extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 	 	// starting on ICS, some WebView methods
 		// can only be called on UI threads
+		final String format = (String) args.get(0);
+		final Integer quality = (Integer) args.get(1);
 		if (action.equals("saveScreenshot")) {
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
 					View view = webView.getRootView();
-
-					view.setDrawingCacheEnabled(true);
-					Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-					view.setDrawingCacheEnabled(false);
-
 					try {
-						File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
-						if (!folder.exists()) {
-							folder.mkdirs();
+						if(format.equals("png") || format.equals("jpg")){
+							view.setDrawingCacheEnabled(true);
+							Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+							view.setDrawingCacheEnabled(false);
+							File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
+							if (!folder.exists()) {
+								folder.mkdirs();
+							}
+
+							File f = new File(folder, "screenshot_" + System.currentTimeMillis() + "."+format);
+
+							FileOutputStream fos = new FileOutputStream(f);
+							if(format.equals("png")){
+								bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+							}
+							if(format.equals("jpg")){
+								bitmap.compress(Bitmap.CompressFormat.JPEG, quality == null?100:quality, fos);
+							}
+							
+							callbackContext.success();
+						}else{
+							callbackContext.error("format "+format+" not found");
+							
 						}
-
-						File f = new File(folder, "screenshot_" + System.currentTimeMillis() + ".png");
-
-						FileOutputStream fos = new FileOutputStream(f);
-						bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-						callbackContext.success();
+						
 
 					} catch (IOException e) {
 						callbackContext.error(e.getMessage());
+						
 					}
 				}
 			});

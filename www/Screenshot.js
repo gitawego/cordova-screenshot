@@ -8,7 +8,13 @@
  */
 var exec = require('cordova/exec');
 module.exports = {
-	save:function(callback,fallback) {
-		exec(callback, fallback, "Screenshot", "saveScreenshot", []);
+	save:function(callback,format,quality) {
+		format = format || 'png';
+		quality = typeof(quality) !== 'number'?100:quality;
+		exec(function(){
+			callback && callback();
+		}, function(error){
+			callback && callback(error);
+		}, "Screenshot", "saveScreenshot", [format,quality]);
 	}
 };
