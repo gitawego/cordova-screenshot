@@ -6,10 +6,13 @@
  *  2012-07-03
  *  MIT licensed
  */
-var exec = require('cordova/exec');
+var exec = require('cordova/exec'), formats = ['png','jpg'];
 module.exports = {
 	save:function(callback,format,quality) {
-		format = format || 'png';
+		format = (format || 'png').toLowerCase();
+		if(formats.indexOf(format) === -1){
+			return callback('invalid format '+format);
+		}
 		quality = typeof(quality) !== 'number'?100:quality;
 		exec(function(){
 			callback && callback();
