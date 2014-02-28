@@ -16,7 +16,8 @@
 
 @synthesize webView;
 
-- (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options
+//- (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options
+- (void)saveScreenshot:(CDVInvokedUrlCommand*)command
 {
 	CGRect imageRect;
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
