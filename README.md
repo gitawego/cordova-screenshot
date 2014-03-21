@@ -35,3 +35,8 @@ navigator.screenshot.save(function(error){
 ```
 
 screenshot files are stored in /sdcard/Pictures for android.
+
+
+License
+=========
+this repo uses the MIT license
