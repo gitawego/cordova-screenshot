@@ -14,8 +14,8 @@ module.exports = {
 			return callback && callback(new Error('invalid format '+format));
 		}
 		quality = typeof(quality) !== 'number'?100:quality;
-		exec(function(){
-			callback && callback();
+		exec(function(res){
+			callback && callback(null,res);
 		}, function(error){
 			callback && callback(error);
 		}, "Screenshot", "saveScreenshot", [format,quality]);
