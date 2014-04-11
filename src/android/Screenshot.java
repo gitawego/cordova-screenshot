@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -53,8 +54,10 @@ public class Screenshot extends CordovaPlugin {
 							if(format.equals("jpg")){
 								bitmap.compress(Bitmap.CompressFormat.JPEG, quality == null?100:quality, fos);
 							}
-							
-							callbackContext.success();
+							JSONArray jsonRes = new JSONArray();
+							jsonRes.put("filePath",f.getAbsolutePath());
+				                        PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
+				                        callbackContext.sendPluginResult(result);
 						}else{
 							callbackContext.error("format "+format+" not found");
 							
