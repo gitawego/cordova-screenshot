@@ -15,21 +15,21 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 ##usage
 
 ```js
-navigator.screenshot.save(function(error){
+navigator.screenshot.save(function(error,res){
   if(error){
     console.error(error);
   }else{
-    console.log('ok');
+    console.log('ok',res.filePath);
   }
 });
 ```
 take screenshot with jpg and custom quality
 ```js
-navigator.screenshot.save(function(error){
+navigator.screenshot.save(function(error,res){
   if(error){
     console.error(error);
   }else{
-    console.log('ok');
+    console.log('ok',res.filePath);
   }
 },'jpg',50);
 ```
