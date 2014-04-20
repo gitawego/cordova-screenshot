@@ -16,6 +16,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.JSONException;
 
 import android.graphics.Bitmap;
@@ -54,7 +55,7 @@ public class Screenshot extends CordovaPlugin {
 							if(format.equals("jpg")){
 								bitmap.compress(Bitmap.CompressFormat.JPEG, quality == null?100:quality, fos);
 							}
-							JSONArray jsonRes = new JSONArray();
+							JSONObject jsonRes = new JSONObject();
 							jsonRes.put("filePath",f.getAbsolutePath());
 				                        PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
 				                        callbackContext.sendPluginResult(result);
@@ -62,8 +63,10 @@ public class Screenshot extends CordovaPlugin {
 							callbackContext.error("format "+format+" not found");
 							
 						}
-						
 
+					} catch (JSONException e) {
+						callbackContext.error(e.getMessage());
+						
 					} catch (IOException e) {
 						callbackContext.error(e.getMessage());
 						
