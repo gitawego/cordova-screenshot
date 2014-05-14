@@ -14,6 +14,8 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 
 ##usage
 
+notice: only android has "res" returned
+
 ```js
 navigator.screenshot.save(function(error,res){
   if(error){
