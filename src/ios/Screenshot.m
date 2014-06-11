@@ -53,8 +53,8 @@
 
 	[webView.layer renderInContext:ctx];
 
-	UIImage image = UIGraphicsGetImageFromCurrentImageContext();
-	NSData imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
 	[imageData writeToFile:jpgPath atomically:NO];
 
 	UIGraphicsEndImageContext();
