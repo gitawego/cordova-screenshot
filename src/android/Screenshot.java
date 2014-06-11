@@ -31,6 +31,7 @@ public class Screenshot extends CordovaPlugin {
 		// can only be called on UI threads
 		final String format = (String) args.get(0);
 		final Integer quality = (Integer) args.get(1);
+		final String fileName = (String)args.get(2);
 		if (action.equals("saveScreenshot")) {
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
@@ -46,7 +47,7 @@ public class Screenshot extends CordovaPlugin {
 								folder.mkdirs();
 							}
 
-							File f = new File(folder, "screenshot_" + System.currentTimeMillis() + "."+format);
+							File f = new File(folder, fileName + "."+format);
 
 							FileOutputStream fos = new FileOutputStream(f);
 							if(format.equals("png")){
