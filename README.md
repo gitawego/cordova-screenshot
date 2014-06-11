@@ -11,6 +11,8 @@ install it via cordova cli
 cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 ```
 
+notice:
+in iOS, only jpg format is supported
 
 ##usage
 
