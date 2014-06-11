@@ -18,7 +18,7 @@
 
 //- (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options
 
-(void)saveScreenshot:(CDVInvokedUrlCommand*)command
+ - (void)saveScreenshot:(CDVInvokedUrlCommand*)command
 {
 	NSString *filename = [command.arguments objectAtIndex:2];
 	NSNumber *quality = [command.arguments objectAtIndex:1];
@@ -32,7 +32,7 @@
 	// statusBarOrientation is more reliable than UIDevice.orientation
 	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 
-	if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) { 
+	if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
 		// landscape check
 		imageRect = CGRectMake(0, 0, CGRectGetHeight(screenRect), CGRectGetWidth(screenRect));
 	} else {
@@ -53,8 +53,8 @@
 
 	[webView.layer renderInContext:ctx];
 
-	UIImage image = UIGraphicsGetImageFromCurrentImageContext();
-	NSData imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
 	[imageData writeToFile:jpgPath atomically:NO];
 
 	UIGraphicsEndImageContext();
