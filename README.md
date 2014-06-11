@@ -14,7 +14,6 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 
 ##usage
 
-notice: only android has "res" returned
 
 ```js
 navigator.screenshot.save(function(error,res){
@@ -34,6 +33,17 @@ navigator.screenshot.save(function(error,res){
     console.log('ok',res.filePath);
   }
 },'jpg',50);
+```
+
+define a filename
+```js
+navigator.screenshot.save(function(error,res){
+  if(error){
+    console.error(error);
+  }else{
+    console.log('ok',res.filePath); //should be path/to/myScreenshot.jpg
+  }
+},'jpg',50,'myScreenShot');
 ```
 
 screenshot files are stored in /sdcard/Pictures for android.
