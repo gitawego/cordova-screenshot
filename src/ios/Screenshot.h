@@ -11,10 +11,16 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Cordova/CDVPlugin.h>
 
+@protocol ScreenshotPluginDelegate <NSObject>
+- (UIImage *)postProcessScreenShot:(UIImage *)screenshot;
+@end
+
 @interface Screenshot : CDVPlugin {
 }
 
 //- (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)saveScreenshot:(CDVInvokedUrlCommand*)command;
+
+@property (nonatomic, weak) id<ScreenshotPluginDelegate> screenshotDelegate;
 
 @end
