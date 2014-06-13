@@ -25,6 +25,10 @@ import android.view.View;
 
 public class Screenshot extends CordovaPlugin {
 
+	public static interface ProcessingIntf {
+		public Bitmap postProcess(Bitmap screenshot);
+	}
+
 	@Override
 	public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 	 	// starting on ICS, some WebView methods
@@ -42,6 +46,11 @@ public class Screenshot extends CordovaPlugin {
 							view.setDrawingCacheEnabled(true);
 							Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
 							view.setDrawingCacheEnabled(false);
+							
+							if (cordova.getActivity() instanceof Screenshot.ProcessingIntf) {
+								bitmap = ((Screenshot.ProcessingIntf)cordova.getActivity()).postProcess(bitmap);
+							}
+							
 							File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
 							if (!folder.exists()) {
 								folder.mkdirs();
@@ -57,7 +66,7 @@ public class Screenshot extends CordovaPlugin {
 								bitmap.compress(Bitmap.CompressFormat.JPEG, quality == null?100:quality, fos);
 							}
 							JSONObject jsonRes = new JSONObject();
-							jsonRes.put("filePath",f.getAbsolutePath());
+							jsonRes.put("filePath","file://" + f.getAbsolutePath());
 				                        PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
 				                        callbackContext.sendPluginResult(result);
 						}else{
