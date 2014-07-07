@@ -22,7 +22,7 @@
 {
 	NSString *filename = [command.arguments objectAtIndex:2];
 	NSNumber *quality = [command.arguments objectAtIndex:1];
-	NSString *path = [NSString stringWithFormat:@"%@",filename];
+	NSString *path = [NSString stringWithFormat:@"%@.jpg",filename];
 
 	NSString *jpgPath = [NSTemporaryDirectory() stringByAppendingPathComponent:path ];
 
