@@ -81,7 +81,7 @@ public class Screenshot extends CordovaPlugin {
 				}
 			});
 			return true;
-		}else if(action.equals("getURIScreenshot")){
+		}else if(action.equals("getScreenshotAsURI")){
 			final Integer quality = (Integer) args.get(0);
 			
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -100,18 +100,17 @@ public class Screenshot extends CordovaPlugin {
 						   byte[] output = Base64.encode(code, Base64.NO_WRAP);
 						   String js_out = new String(output);
 							
-							JSONObject jsonRes = new JSONObject();
-							jsonRes.put("uri", js_out);
-                     PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
-                     callbackContext.sendPluginResult(result);
+						   JSONObject jsonRes = new JSONObject();
+						   jsonRes.put("URI", js_out);
+				                   PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
+				                   callbackContext.sendPluginResult(result);
 							
-							js_out = null;
-							output = null;
-							code = null;
+						   js_out = null;
+						   output = null;
+						   code = null;
 						}
 						
 						jpeg_data = null;
-					
 
 					} catch (JSONException e) {
 						callbackContext.error(e.getMessage());
