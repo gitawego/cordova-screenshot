@@ -99,7 +99,7 @@ public class Screenshot extends CordovaPlugin {
 						   byte[] code = jpeg_data.toByteArray();
 						   byte[] output = Base64.encode(code, Base64.NO_WRAP);
 						   String js_out = new String(output);
-							
+						   js_out = "data:image/jpeg;base64," + js_out;
 						   JSONObject jsonRes = new JSONObject();
 						   jsonRes.put("URI", js_out);
 				                   PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
