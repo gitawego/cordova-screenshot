@@ -50,7 +50,7 @@ navigator.screenshot.save(function(error,res){
 
 screenshot files are stored in /sdcard/Pictures for android.
 
-take screenshot and get it as Data URI
+take screenshot and get it as Data URI (android only for now)
 ```js
 navigator.screenshot.URI(function(error,res){
   if(error){
