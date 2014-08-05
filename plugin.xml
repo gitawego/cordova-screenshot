@@ -2,7 +2,7 @@
 <plugin id="org.apache.cordova.screenshot" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0">
     <name>Screenshot</name>
     <description>screenshot PhoneGap Plugin for Android</description>
-    <license>Apache 2.0</license>
+    <license>MIT</license>
     <keywords>cordova,screenshot</keywords>
     <repo>https://github.com/gitawego/cordova-screenshot.git</repo>
     <engines>
