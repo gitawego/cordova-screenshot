@@ -6,7 +6,7 @@
  * @created Jul 2nd, 2012.
  * improved by Hongbo LU
  */
-package org.apache.cordova.screenshot;
+package com.darktalker.cordova.screenshot;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
