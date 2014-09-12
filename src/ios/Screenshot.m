@@ -16,6 +16,13 @@
 
 @synthesize webView;
 
+- (void)pluginInitialize
+{
+    [super pluginInitialize];
+    if ([self.viewController conformsToProtocol:@protocol(ScreenshotPluginDelegate)])
+        self.screenshotDelegate = (id<ScreenshotPluginDelegate>)self.viewController;
+}
+
 //- (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options
 
  - (void)saveScreenshot:(CDVInvokedUrlCommand*)command
@@ -51,13 +58,18 @@
 	CGContextTranslateCTM(ctx, 0, 0);
 	CGContextFillRect(ctx, imageRect);
 
-	[webView.layer renderInContext:ctx];
+    [webView.layer renderInContext:ctx];
 
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-	NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
-	[imageData writeToFile:jpgPath atomically:NO];
 
-	UIGraphicsEndImageContext();
+    UIGraphicsEndImageContext();
+
+    UIImage *postProcessedImage = [self.screenshotDelegate postProcessScreenShot:image];
+    if (!postProcessedImage)
+        postProcessedImage = image;
+
+    NSData *imageData = UIImageJPEGRepresentation(postProcessedImage, [quality floatValue]);
+	[imageData writeToFile:jpgPath atomically:NO];
 
 	CDVPluginResult* pluginResult = nil;
 	NSDictionary *jsonObj = [ [NSDictionary alloc]
