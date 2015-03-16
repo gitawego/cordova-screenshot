@@ -13,22 +13,77 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
 import android.util.Base64;
+import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 
 
 public class Screenshot extends CordovaPlugin {
+	
+	private TextureView findXWalkTextureView(ViewGroup group) {
 
+		int childCount = group.getChildCount();
+		for(int i=0;i<childCount;i++) {
+			View child = group.getChildAt(i);
+			if(child instanceof TextureView) {
+				String parentClassName = child.getParent().getClass().toString();
+				boolean isRightKindOfParent = (parentClassName.contains("XWalk"));
+				if(isRightKindOfParent) {
+					return (TextureView) child;
+				}
+			} else if(child instanceof ViewGroup) {
+				TextureView textureView = findXWalkTextureView((ViewGroup) child);
+				if(textureView != null) {
+					return textureView;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private Bitmap getBitmap() {
+		Bitmap bitmap = null;
+		
+		boolean isCrosswalk = false;
+		try {
+			Class<?> xWalkView = Class.forName("org.xwalk.core.XWalkView");
+			isCrosswalk = xWalkView.isAssignableFrom(webView.getClass());
+		} catch (Exception e) {
+		}
+		
+		if(isCrosswalk) {
+			try {
+				
+				TextureView textureView = findXWalkTextureView((ViewGroup)webView);
+				bitmap = textureView.getBitmap();
+
+			} catch(Exception e) {
+			}
+		} else {
+
+			View view = webView.getRootView();
+			view.setDrawingCacheEnabled(true);
+			bitmap = Bitmap.createBitmap(view.getDrawingCache());
+			view.setDrawingCacheEnabled(false);
+
+		}
+		
+		return bitmap;
+	}
+	
+	
 	@Override
 	public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 	 	// starting on ICS, some WebView methods
@@ -42,12 +97,10 @@ public class Screenshot extends CordovaPlugin {
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					View view = webView.getRootView();
+					
 					try {
 						if(format.equals("png") || format.equals("jpg")){
-							view.setDrawingCacheEnabled(true);
-							Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-							view.setDrawingCacheEnabled(false);
+							Bitmap bitmap = getBitmap();
 							File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
 							if (!folder.exists()) {
 								folder.mkdirs();
@@ -87,11 +140,8 @@ public class Screenshot extends CordovaPlugin {
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					View view = webView.getRootView();
 					try {
-						view.setDrawingCacheEnabled(true);
-						Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-						view.setDrawingCacheEnabled(false);
+						Bitmap bitmap = getBitmap();
 
 						ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
 						
