@@ -13,6 +13,7 @@ cordova plugin add https://github.com/gitawego/cordova-screenshot.git
 
 notice:
 in iOS, only jpg format is supported
+in Android, the default WebView and [Crosswalk](https://crosswalk-project.org/documentation/cordova.html) are both supported
 
 ##usage
 
