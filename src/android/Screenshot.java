@@ -91,7 +91,6 @@ public class Screenshot extends CordovaPlugin {
         File f = new File(imageFileName);
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
-        //this.cordova.getContext().sendBroadcast(mediaScanIntent); //this is deprecated
         this.cordova.getActivity().sendBroadcast(mediaScanIntent);
     }
 	
@@ -132,7 +131,7 @@ public class Screenshot extends CordovaPlugin {
 				                        PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
 				                        callbackContext.sendPluginResult(result);
 
-                            scanPhoto(f.getAbsolutePath());
+                            				scanPhoto(f.getAbsolutePath());
 						}else{
 							callbackContext.error("format "+format+" not found");
 
