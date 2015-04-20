@@ -20,8 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
 import android.view.TextureView;
@@ -82,6 +84,15 @@ public class Screenshot extends CordovaPlugin {
 		
 		return bitmap;
 	}
+
+    private void scanPhoto(String imageFileName)
+    {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(imageFileName);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.cordova.getActivity().sendBroadcast(mediaScanIntent);
+    }
 	
 	
 	@Override
@@ -119,9 +130,11 @@ public class Screenshot extends CordovaPlugin {
 							jsonRes.put("filePath",f.getAbsolutePath());
 				                        PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
 				                        callbackContext.sendPluginResult(result);
+
+                            				scanPhoto(f.getAbsolutePath());
 						}else{
 							callbackContext.error("format "+format+" not found");
-							
+
 						}
 
 					} catch (JSONException e) {
