@@ -60,15 +60,15 @@ public class Screenshot extends CordovaPlugin {
 		
 		boolean isCrosswalk = false;
 		try {
-			Class<?> xWalkView = Class.forName("org.xwalk.core.XWalkView");
-			isCrosswalk = xWalkView.isAssignableFrom(webView.getClass());
+			Class.forName("org.crosswalk.engine.XWalkWebViewEngine");
+			isCrosswalk = true;
 		} catch (Exception e) {
 		}
 		
 		if(isCrosswalk) {
 			try {
 				
-				TextureView textureView = findXWalkTextureView((ViewGroup)webView);
+				TextureView textureView = findXWalkTextureView((ViewGroup)webView.getView());
 				bitmap = textureView.getBitmap();
 
 			} catch(Exception e) {
