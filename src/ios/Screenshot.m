@@ -51,7 +51,11 @@
 	CGContextTranslateCTM(ctx, 0, 0);
 	CGContextFillRect(ctx, imageRect);
 
-	[webView.layer renderInContext:ctx];
+    if ([webView respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+        [webView drawViewHierarchyInRect:webView.bounds afterScreenUpdates:YES];
+    } else {
+        [webView.layer renderInContext:ctx];
+    }
 
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
