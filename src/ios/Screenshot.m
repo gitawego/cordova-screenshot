@@ -48,14 +48,9 @@
 
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
 	[[UIColor blackColor] set];
-	CGContextTranslateCTM(ctx, 0, 0);
 	CGContextFillRect(ctx, imageRect);
-
-    if ([webView respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
-        [webView drawViewHierarchyInRect:webView.bounds afterScreenUpdates:YES];
-    } else {
-        [webView.layer renderInContext:ctx];
-    }
+  UIWindow *window = [UIApplication sharedApplication].keyWindow;
+  [window.layer renderInContext:ctx];
 
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
