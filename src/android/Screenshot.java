@@ -69,18 +69,19 @@ public class Screenshot extends CordovaPlugin {
 			try {
 				
 				TextureView textureView = findXWalkTextureView((ViewGroup)webView.getView());
-				bitmap = textureView.getBitmap();
-
+                                if (textureView != null) {
+				    bitmap = textureView.getBitmap();
+                                    return bitmap;
+                                }
 			} catch(Exception e) {
 			}
-		} else {
+		} 
 
-			View view = webView.getView().getRootView();
-			view.setDrawingCacheEnabled(true);
-			bitmap = Bitmap.createBitmap(view.getDrawingCache());
-			view.setDrawingCacheEnabled(false);
+	        View view = webView.getView().getRootView();
+		view.setDrawingCacheEnabled(true);
+		bitmap = Bitmap.createBitmap(view.getDrawingCache());
+		view.setDrawingCacheEnabled(false);
 
-		}
 		
 		return bitmap;
 	}
