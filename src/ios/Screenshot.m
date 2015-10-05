@@ -51,4 +51,16 @@
 	[self writeJavascript:[pluginResult toSuccessCallbackString:command.callbackId]];
 }
 
+- (void) getScreenshotAsURI:(CDVInvokedUrlCommand*)command
+{
+	NSNumber *quality = command.arguments[0];
+	UIImage *image = [self getScreenshot];
+	NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
+	NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
+	NSDictionary *jsonObj = @{
+	    @"URI" : [NSString stringWithFormat:@"data:image/jpeg;base64,%@", base64Encoded]
+	};
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonObj];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:[command callbackId]];
+}
 @end
