@@ -90,6 +90,13 @@ navigator.screenshot.URI(function(error,res){
 }])
 ```
 
+##Known Issue
+###in Android platform I receive the black image with crosswalk 
+####solution: 
+
+add this line ``<preference name="CrosswalkAnimatable" value="true" />`` in config.xml, see [bug](https://crosswalk-project.org/jira/browse/XWALK-2233)
+
+
 License
 =========
 this repo uses the MIT license
