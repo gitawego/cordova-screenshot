@@ -48,7 +48,8 @@
 	];
 
 	pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonObj];
-	[self writeJavascript:[pluginResult toSuccessCallbackString:command.callbackId]];
+	NSString* callbackId = command.callbackId;
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
 - (void) getScreenshotAsURI:(CDVInvokedUrlCommand*)command
