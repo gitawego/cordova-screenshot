@@ -26,13 +26,16 @@ import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 public class Screenshot extends CordovaPlugin {
-	
+
+	private String base64Header = "data:image/jpeg;base64,";
+
 	private TextureView findXWalkTextureView(ViewGroup group) {
 
 		int childCount = group.getChildCount();
@@ -150,6 +153,7 @@ public class Screenshot extends CordovaPlugin {
 			return true;
 		}else if(action.equals("getScreenshotAsURI")){
 			final Integer quality = (Integer) args.get(0);
+            final Integer scaleDown = (Integer) args.get(1);
 			
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
@@ -157,25 +161,24 @@ public class Screenshot extends CordovaPlugin {
 					try {
 						Bitmap bitmap = getBitmap();
 
-						ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
-						
-						if (bitmap.compress(CompressFormat.JPEG, quality, jpeg_data)) {
-						   byte[] code = jpeg_data.toByteArray();
-						   byte[] output = Base64.encode(code, Base64.NO_WRAP);
-						   String js_out = new String(output);
-						   js_out = "data:image/jpeg;base64," + js_out;
-						   JSONObject jsonRes = new JSONObject();
-						   jsonRes.put("URI", js_out);
-				                   PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
-				                   callbackContext.sendPluginResult(result);
-							
-						   js_out = null;
-						   output = null;
-						   code = null;
-						}
-						
-						jpeg_data = null;
+                        int tgtWidth = bitmap.getWidth() / scaleDown;
+                        int tgtHeight = bitmap.getHeight() / scaleDown;
 
+                        if (scaleDown > 1) {
+                            bitmap = Bitmap.createScaledBitmap(bitmap, tgtWidth, tgtHeight, true);
+                        }
+
+                        ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
+                        Base64OutputStream raw_jpeg = new Base64OutputStream(jpeg_data, Base64.NO_WRAP);
+                        if (bitmap.compress(CompressFormat.JPEG, quality, raw_jpeg)) {
+                            StringBuilder sb = new StringBuilder(base64Header.length() + jpeg_data.size());
+                            sb.append(base64Header);
+                            sb.append(jpeg_data.toString());
+                            JSONObject jsonRes = new JSONObject();
+                            jsonRes.put("URI", sb.toString());
+                            PluginResult result = new PluginResult(PluginResult.Status.OK, jsonRes);
+                            callbackContext.sendPluginResult(result);
+                        }
 					} catch (JSONException e) {
 						callbackContext.error(e.getMessage());
 						
