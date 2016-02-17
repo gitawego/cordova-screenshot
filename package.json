@@ -6,7 +6,8 @@
     "id": "com.darktalker.cordova.screenshot",
     "platforms": [
       "android",
-      "ios"
+      "ios",
+      "osx"
     ]
   },
   "repository": {
@@ -18,7 +19,8 @@
     "screenshot",
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-ios"
+    "cordova-ios",
+    "cordova-osx"
   ],
   "engines": [
     {
