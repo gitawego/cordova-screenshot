@@ -36,4 +36,14 @@
         <header-file src="src/ios/Screenshot.h" />
         <source-file src="src/ios/Screenshot.m" />
     </platform>
+    <!-- osx -->
+    <platform name="osx">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Screenshot">
+                <param name="osx-package" value="Screenshot"/>
+            </feature>
+        </config-file>
+        <header-file src="src/osx/Screenshot.h" />
+        <source-file src="src/osx/Screenshot.m" />
+    </platform>
 </plugin>
