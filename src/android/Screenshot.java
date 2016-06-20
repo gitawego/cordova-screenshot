@@ -217,7 +217,6 @@ public class Screenshot extends CordovaPlugin {
         return false;
     }
 
-    @Override
     public void onRequestPermissionResult(int requestCode, String[] permissions,
                                           int[] grantResults) throws JSONException
     {
