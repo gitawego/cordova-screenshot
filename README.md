@@ -6,7 +6,7 @@ cordova-screenshot
 
 The Screenshot plugin allows your application to take screenshots of the current screen and save them into the phone.
 
-##how to install
+## how to install
 
 install it via cordova cli
 
@@ -18,7 +18,7 @@ notice:
 in iOS, only jpg format is supported
 in Android, the default WebView and [Crosswalk](https://crosswalk-project.org/documentation/cordova.html) are both supported
 
-##usage
+## usage
 
 
 ```js
@@ -66,7 +66,7 @@ navigator.screenshot.URI(function(error,res){
 },50);
 ```
 
-##usage in AngularJS
+## usage in AngularJS
 
 ```js
 .service('$cordovaScreenshot', ['$q', function ($q){
@@ -93,9 +93,9 @@ navigator.screenshot.URI(function(error,res){
 }])
 ```
 
-##Known Issue
-###in Android platform I receive the black image with crosswalk 
-####solution: 
+## Known Issue
+### in Android platform I receive the black image with crosswalk 
+#### solution: 
 
 add this line ``<preference name="CrosswalkAnimatable" value="true" />`` in config.xml, see [bug](https://crosswalk-project.org/jira/browse/XWALK-2233)
 
