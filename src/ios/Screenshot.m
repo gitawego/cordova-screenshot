@@ -16,6 +16,12 @@
 
 @synthesize webView;
 
+CGFloat statusBarHeight()
+{
+    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+    return MIN(statusBarSize.width, statusBarSize.height);
+}
+
 - (UIImage *)getScreenshot
 {
 	UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -24,7 +30,20 @@
 	[keyWindow drawViewHierarchyInRect:keyWindow.bounds afterScreenUpdates:NO];
 	UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-	return img;
+
+	// cut the status bar from the screenshot
+	CGRect smallRect = CGRectMake (0,statusBarHeight()*img.scale,rect.size.width*img.scale,rect.size.height*img.scale);
+ 
+	CGImageRef subImageRef = CGImageCreateWithImageInRect(img.CGImage, smallRect);
+	CGRect smallBounds = CGRectMake(0,0,CGImageGetWidth(subImageRef), CGImageGetHeight(subImageRef));
+
+	UIGraphicsBeginImageContext(smallBounds.size);
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	CGContextDrawImage(context,smallBounds,subImageRef);
+	UIImage* cropped = [UIImage imageWithCGImage:subImageRef];
+	UIGraphicsEndImageContext();  
+
+	return cropped;
 }
 
 - (void)saveScreenshot:(CDVInvokedUrlCommand*)command
