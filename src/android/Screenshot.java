@@ -189,6 +189,29 @@ public class Screenshot extends CordovaPlugin {
         });
     }
 
+     public void getScreenshotAsURISync() throws JSONException{
+        mQuality = (Integer) mArgs.get(0);
+        
+        Runnable r = new Runnable(){
+            @Override
+            public void run() {
+                Bitmap bitmap = getBitmap();
+                if (bitmap != null) {
+                    getScreenshotAsURI(bitmap, mQuality);
+                }
+                synchronized (this) { this.notify(); }
+            }
+        };
+
+        synchronized (r) {
+            super.cordova.getActivity().runOnUiThread(r);
+            try{
+                r.wait();
+            } catch (InterruptedException e){
+                mCallbackContext.error(e.getMessage());
+            }
+        }
+    }
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -211,6 +234,9 @@ public class Screenshot extends CordovaPlugin {
             } else {
                 PermissionHelper.requestPermissions(this, SAVE_SCREENSHOT_URI_SEC, PERMISSIONS);
             }
+            return true;
+        } else if (action.equals("getScreenshotAsURISync")){
+            getScreenshotAsURISync();
             return true;
         }
         callbackContext.error("action not found");
