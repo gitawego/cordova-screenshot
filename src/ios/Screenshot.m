@@ -43,6 +43,8 @@ CGFloat statusBarHeight()
 	UIImage* cropped = [UIImage imageWithCGImage:subImageRef];
 	UIGraphicsEndImageContext();  
 
+	CGImageRelease(subImageRef);
+
 	return cropped;
 }
 
