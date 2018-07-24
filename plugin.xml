@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="com.darktalker.cordova.screenshot" version="0.1.5" 
-    xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <name>Screenshot</name>
+<plugin id="com.darktalker.cordova.screenshot" version="0.1.6" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>com.darktalker.cordova.screenshot</name>
     <description>screenshot PhoneGap Plugin for Android</description>
     <license>MIT</license>
-    <keywords>cordova,screenshot</keywords>
-    <repo>https://github.com/gitawego/cordova-screenshot.git</repo>
+    <keywords>cordova,screenshot,ecosystem:cordova,cordova-android,cordova-ios,cordova-osx</keywords>
+    <repo>git+https://github.com/gitawego/cordova-screenshot.git</repo>
     <engines>
-        <engine name="cordova" version=">=3.0.0" />
+        <engine name="cordova" version=">=3.0.0"/>
     </engines>
     <js-module src="www/Screenshot.js" name="screenshot">
-        <merges target="navigator.screenshot" />
+        <merges target="navigator.screenshot"/>
     </js-module>
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Screenshot">
-                <param name="android-package" value="com.darktalker.cordova.screenshot.Screenshot" />
+                <param name="android-package" value="com.darktalker.cordova.screenshot.Screenshot"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
         </config-file>
-        <source-file src="src/android/Screenshot.java" target-dir="src/com/darktalker/cordova/screenshot" />
-        <source-file src="src/android/PermissionHelper.java" target-dir="src/com/darktalker/cordova/screenshot" />
+        <source-file src="src/android/Screenshot.java" target-dir="src/com/darktalker/cordova/screenshot"/>
+        <source-file src="src/android/PermissionHelper.java" target-dir="src/com/darktalker/cordova/screenshot"/>
     </platform>
     <!-- ios -->
     <platform name="ios">
@@ -33,8 +31,8 @@
                 <param name="ios-package" value="Screenshot"/>
             </feature>
         </config-file>
-        <header-file src="src/ios/Screenshot.h" />
-        <source-file src="src/ios/Screenshot.m" />
+        <header-file src="src/ios/Screenshot.h"/>
+        <source-file src="src/ios/Screenshot.m"/>
     </platform>
     <!-- osx -->
     <platform name="osx">
@@ -43,7 +41,9 @@
                 <param name="osx-package" value="Screenshot"/>
             </feature>
         </config-file>
-        <header-file src="src/osx/Screenshot.h" />
-        <source-file src="src/osx/Screenshot.m" />
+        <header-file src="src/osx/Screenshot.h"/>
+        <source-file src="src/osx/Screenshot.m"/>
     </platform>
+    <issue>https://github.com/gitawego/cordova-screenshot/issues</issue>
+    <author>Hongbo LU</author>
 </plugin>
