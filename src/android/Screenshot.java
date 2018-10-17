@@ -46,7 +46,6 @@ public class Screenshot extends CordovaPlugin {
     protected final static String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static final int PERMISSION_DENIED_ERROR = 20;
     public static final int SAVE_SCREENSHOT_SEC = 0;
-    public static final int SAVE_SCREENSHOT_URI_SEC = 1;
 
     @Override
     public Object onMessage(String id, Object data) {
@@ -229,11 +228,7 @@ public class Screenshot extends CordovaPlugin {
             }
             return true;
         } else if (action.equals("getScreenshotAsURI")) {
-            if(PermissionHelper.hasPermission(this, PERMISSIONS[0])) {
-                getScreenshotAsURI();
-            } else {
-                PermissionHelper.requestPermissions(this, SAVE_SCREENSHOT_URI_SEC, PERMISSIONS);
-            }
+            getScreenshotAsURI();
             return true;
         } else if (action.equals("getScreenshotAsURISync")){
             getScreenshotAsURISync();
@@ -258,9 +253,6 @@ public class Screenshot extends CordovaPlugin {
         {
             case SAVE_SCREENSHOT_SEC:
                 saveScreenshot();
-                break;
-            case SAVE_SCREENSHOT_URI_SEC:
-                getScreenshotAsURI();
                 break;
         }
     }
